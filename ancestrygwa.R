@@ -1,7 +1,24 @@
 
 
+args<-commandArgs(TRUE)
+
+labelinputfile<-args[1]
+chr<-args[2]
+
 pathresults<-"chromopainterparsedout"
-labelinputfile<-labelinput
+
+# get the genome matrix files
+listfiles<-list.files(pathresults,pattern="_parsedGM")
+myfile<-gstfiles[grep(chr,listfiles)]
+cat("working over these files:")
+cat(listfiles)
+
+# read the sample.out file:
+
+cat("this is an example of how it looks a painted chromosome")
+print(sampleout[1:10,1:10])
+
+sampleout<-read.table(paste(pathresults,samplefile, sep="/") , header=F,fill=T)
 
 ############labels of the painted chromoscare in omes
 

@@ -27,9 +27,12 @@ or all to all mode. (4) genetic clusters assigned by ADMIXTURE.
 ## Pipeline steps and files description
 
 (A) Parse the output from Chromosome painter. There is one .sample file per chromosome with several painted chromosomes runs per indidivual. Provided 
-the file name, this script will produce another, more readable, file named '_parsedGM' at the end. This has to be done for each chromosome.
+the file name, this script will produce another, more readable, file named '_parsedGM' at the end. This has to be done for each chromosome. Make sure 
+that the .samples.out file only has a number that refers to the chromosome, otherwise there will be problems downstream.
+
 E.g.run
 python parse_sampleout_file_otherfolder.py /ebio/abt6_projects8/ath_1001G_history/finestructure/guideddrought/chr1.samples.out
+
 
 (B) Run a chromopainted gwa. Since I know where my results are, I just give as an argument the chromosome number. I need to provide a label of the input, 
 which are the genomes.
@@ -47,7 +50,10 @@ also ANOVA could be done, but I implemented a non-parametric test in case the va
 
 The output p-value list is saved as an object file named finegwa_chrX.RObject
 
-This needs an extra input file to associate the chromopainter output with phenotypes and population structure.
+This needs an extra label input file to associate the chromopainter output with phenotypes and population structure. The first column should be the
+genome identifiers, the second the population group (discrete variable) or principal component as one possible descriptor of the structure (continuous
+variable).
+
  
 (C) Generate a genome map. From the haplotypes input of chromosomepainter, the python file extracts the row of positions, and the R file puts all the 
 chromosome positions and generates an R object called chrpos.RObject.
