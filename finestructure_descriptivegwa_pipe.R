@@ -1,14 +1,7 @@
 
 
-############# Set pats
-ebiopath<-'/ebio'
-# ebiopath<-'/home/moisesexpositoalonso/ebio_remote'
-# ebiopath<-'/Users/moisesexpositoalonso/work_remote/home/moisesexpositoalonso/ebio_remote'
-
-# pathresults<-paste( ebiopath,'/abt6_projects8/ath_1001G_history/finestructure/guideddrought' ,sep="")
-
-# pathresults<-paste( ebiopath,'/abt6_projects8/ath_1001G_history/finestructure/weiout/combined' ,sep="")
-pathresults<-paste( ebiopath,'/abt6_projects9/ath_1001G_image_pheno/experiment_218_droughtgwa/fineancestry/finestructure/unguided' ,sep="")
+pathresults<-"chromopainterparsedout"
+labelinputfile<-labelinput
 
 ############labels of the painted chromoscare in omes
 

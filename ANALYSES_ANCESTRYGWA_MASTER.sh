@@ -1,11 +1,30 @@
 #!/bin/bash
-# #README OF ANALYSES FINESTRUCTURE
+
+
+# This bash script has the list and order of commands that need to be run.
+
+python parse_sampleout_file_otherfolder.py chr1.samples.out
+python parse_sampleout_file_otherfolder.py chr2.samples.out
+python parse_sampleout_file_otherfolder.py chr3.samples.out
+python parse_sampleout_file_otherfolder.py chr4.samples.out
+python parse_sampleout_file_otherfolder.py chr5.samples.out
+
+# Not the ancestry GWA analysis
+
+Rscript finestructure_descriptivegwa_pipe.R chr1.samples.out
+Rscript finestructure_descriptivegwa_pipe.R chr2.samples.out
+Rscript finestructure_descriptivegwa_pipe.R chr3.samples.out
+Rscript finestructure_descriptivegwa_pipe.R chr4.samples.out
+Rscript finestructure_descriptivegwa_pipe.R chr5.samples.out
+
+
+
+
 # echo ' prepare label files ' 
 # Rscript adapt_files_finestructure_onlyasians.R
 # Rscript adapt_files_finestructure_onlyrelicts.R
 # Rscript adapt_files_finestructure_onlyswedes.R
 # Rscript adapt_files_finestructure_onlymediterraneans.R
-
 # # this runs chromosomepainting
 # cd finestructure
 # echo 'running guided painting for drought genotypes ...'
@@ -13,7 +32,6 @@
 # bash guidedpainting_pipe.sh onlyrelicts &
 # bash guidedpainting_pipe.sh onlyasians &
 # bash guidedpainting_pipe.sh onlymediterraneans &
-
 #bash guidedpainting_drough.sh
 
 # cd ..

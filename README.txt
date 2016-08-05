@@ -39,6 +39,7 @@ Also need to provide a phenotype. In this case I have my drought phenotype (and 
 ../MASTER_DATA.RData
 E.g. run
 Rscript finestructure_descriptivegwa_pipe.R 1
+Rscript ancestrygwa.R
 
 Inside this file, there is a key function, fineANOVA, which after using apply in sampleout, will merge the line of ancestry and the phenotype file and 
 compute a p-value of the differences of phenotypes across ancestry haplotypes using a kruskal wallis test. If the phenotype is normally distributed 
@@ -46,6 +47,8 @@ also ANOVA could be done, but I implemented a non-parametric test in case the va
 
 The output p-value list is saved as an object file named finegwa_chrX.RObject
 
+This needs an extra input file to associate the chromopainter output with phenotypes and population structure.
+ 
 (C) Generate a genome map. From the haplotypes input of chromosomepainter, the python file extracts the row of positions, and the R file puts all the 
 chromosome positions and generates an R object called chrpos.RObject.
 
