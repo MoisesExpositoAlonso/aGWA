@@ -4,6 +4,7 @@
 ####### Max Planck Institute #########
 ############ Weigel Lab ##############
  
+
 ## State the problem
 Quantitative genetics is a well fundamented science that usually focuses on the effect of specific alleles (ACGT) in a quantitatie phenotype. 
 Oftentimes achieving this task is challenging due to confounding structure in the data such as historical population conections and complex
