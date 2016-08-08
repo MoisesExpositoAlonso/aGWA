@@ -1,10 +1,18 @@
 import sys
 import subprocess
 
-# define the input file. This is the ".samples.out" from chromosome painter software. 
-samplefile=sys.argv[1]
-name=samplefile.split('/')[-1 ] # in case it comes from another folder.
-# samplefile='chr2.samples.out_header'
+## define input ".samples.out" file
+
+try:
+ samplefile=sys.argv[1]
+except IndexError:
+ print "no input file"
+ print "run as: python parse_sampleout_file_otherfolder.py examplechrX.samples.out" 
+ exit()
+
+name=samplefile.split('/')[-1 ]
+
+#samplefile='chr2.samples.out_header'
 #samplefile='/ebio/abt6_projects8/ath_1001G_history/finestructure/guideddrought/chr2.samples.out'
 
 s=open(samplefile,'r')
@@ -13,9 +21,10 @@ s=open(samplefile,'r')
 # define the folder where the output file is going to be. If there is not a second argument, then is assumed to be in the current folder.
 try:
  newfolder=sys.argv[2]  
- except IndexError:
-  newfolder="chromopainterparsedout"
-  call("mkdir %s" s%(newfolder))
+except IndexError:
+ newfolder="chromopainterparsedout"
+
+call("mkdir %s" %(newfolder))
 
 
 # the new file is going the be created from the input file, and stored in the newfolder.
@@ -41,5 +50,3 @@ for i in gm:
 	gmfile.write(i)
 
 gmfile.close()
-
-

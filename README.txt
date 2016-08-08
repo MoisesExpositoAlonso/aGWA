@@ -62,6 +62,8 @@ E.g. run
 python parsie_positions_fromhaplotypes.py 1
 parse_positions_chr.R
 
+This needs the chromosomepainter input to be able to get the original map positions of SNPs.
+
 (D) Posthot analyses
 (D.1) Plot a classic Manhattan plot. Given a fingewa_chrX.RObject this file will load the finegwas results of the 5 genomes and the genome map positions and 
 produe a manhattan plot.

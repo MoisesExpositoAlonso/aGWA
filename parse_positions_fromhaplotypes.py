@@ -1,5 +1,7 @@
 
 # example run; python parse_positions_fromhaplotypes.py 1135-imp-1.haplotypes-drought   
+
+
 import sys
 
 # hapfile=open('toyhap.haplotypes','r')

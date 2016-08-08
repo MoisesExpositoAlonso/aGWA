@@ -10,16 +10,16 @@ python parse_sampleout_file_otherfolder.py chr4.samples.out
 python parse_sampleout_file_otherfolder.py chr5.samples.out
 
 # Create the SNP map
-python parsie_positions_fromhaplotypes.py 1
-python parsie_positions_fromhaplotypes.py 2
-python parsie_positions_fromhaplotypes.py 3
-python parsie_positions_fromhaplotypes.py 4
-python parsie_positions_fromhaplotypes.py 5
+python parse_positions_fromhaplotypes.py 1135-imp-1.haplotypes-drought
+python parse_positions_fromhaplotypes.py 1135-imp-2.haplotypes-drought
+python parse_positions_fromhaplotypes.py 1135-imp-3.haplotypes-drought
+python parse_positions_fromhaplotypes.py 1135-imp-4.haplotypes-drought
+python parse_positions_fromhaplotypes.py 1135-imp-5.haplotypes-drought
 
 parse_positions_chr.R
 
 
-# Not the ancestry GWA analysis
+# Now the ancestry GWA analysis
 
 Rscript ancestrygwa.R label_input_genomes.tsv 1 
 Rscript ancestrygwa.R label_input_genomes.tsv 2
@@ -30,6 +30,23 @@ Rscript ancestrygwa.R label_input_genomes.tsv 5
 # Combine output with a chromosome and position map
 
 Rscript combine_pvalue_position.R
+
+# Get the average length of blocks
+
+block_length_dist.py
+
+# Generate empirical distribution
+
+Rscript empirical_distribution_bypermutation.R
+
+
+
+
+
+
+
+
+
 
 
 # echo ' prepare label files ' 
