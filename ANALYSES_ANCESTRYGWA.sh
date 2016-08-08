@@ -3,11 +3,11 @@
 
 # This bash script has the list and order of commands that need to be run.
 
-python parse_sampleout_file_otherfolder.py chr1.samples.out
-python parse_sampleout_file_otherfolder.py chr2.samples.out
-python parse_sampleout_file_otherfolder.py chr3.samples.out
-python parse_sampleout_file_otherfolder.py chr4.samples.out
-python parse_sampleout_file_otherfolder.py chr5.samples.out
+python parse_sampleout_file_otherfolder.py finestructure/weiout/chr1.samples.out
+python parse_sampleout_file_otherfolder.py finestructure/weiout/chr2.samples.out
+python parse_sampleout_file_otherfolder.py finestructure/weiout/chr3.samples.out
+python parse_sampleout_file_otherfolder.py finestructure/weiout/chr4.samples.out
+python parse_sampleout_file_otherfolder.py finestructure/weiout/chr5.samples.out
 
 # Create the SNP map
 python parse_positions_fromhaplotypes.py 1135-imp-1.haplotypes-drought
