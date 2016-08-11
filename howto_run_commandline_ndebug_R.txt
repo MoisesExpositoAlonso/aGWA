@@ -1,0 +1,30 @@
+Unnamed repository; edit this file 'description' to name the repository.ss your command line arguments into an interactive shell with --args and then source('') the script.
+
+$ R --args -v
+
+R version 2.8.1 (2008-12-22)
+Copyright (C) 2008 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> require(getopt)
+Loading required package: getopt
+> opt = getopt(c(
++ 'verbose', 'v', 2, "integer"
++ ));
+> opt
+$verbose
+[1] 1
+> source('my_script.R')
+You could now use the old browser() function to debug.

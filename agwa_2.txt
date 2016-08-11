@@ -1,0 +1,34 @@
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+
+usage: Rscript ancestrygwa.R [labelinputfile] [chromosome] [sampleoutfile] [discrete/continuous] [path_samleout_parsed] [nameanalysis] 
+required fields: Rscript ancestrygwa.R [compulsory] [compulsory] [compulsory] [default=discrete] [optional] [optional]
+-------------------------------------------------------
+
+loading aGWA functions...
+
+ ... done loading functions 
+
+reading the parsed .sample.out file...
+this is an example of how it looks a painted chromosome 
+    V1  V2  V3  V4  V5  V6  V7  V8  V9 V10
+1  159 356 356 356 356 356 356 356 356 356
+2  265 193 193 193 193 193 193 193 193 193
+3  350 322 322 322 322 322 322 322 322 322
+4  351 238 238 238 238 238 238 238 238 238
+5  403 385 385 385 385 385 385 385 385 385
+6  424  81  81  81  81  81  81  81  81  81
+7  430 531 531 531 531 531 531 531 531 531
+8  628 343 343 343 343 343 343 343 343 343
+9  630 272 272 272 272 272 272 272 272 272
+10 763 630 630 630 630 630 630 630 630 630
+[1] "is numeric TRUE"
+[1] "is interger TRUE"
+[1] "is character FALSE"
+[1] ""
+[1] "start gwa finestructure ... "
+[1] "...end gwa finestructure"
+[1] "aGWA results stored in:  agwa_chr2.RObject"

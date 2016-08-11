@@ -1,9 +1,15 @@
-########### Ancestry GWA #############
-###### Moises Exposito-Alonso ########
-### moisesexpositoalonso@gmail.com ###
-####### Max Planck Institute #########
-############ Weigel Lab ##############
+#########################################     Ancestry GWA     #########################################
+########################################################################################################
+####################################     Moises Exposito-Alonso     ####################################
+#################################     moisesexpositoalonso@gmail.com     ###############################
+##############################     moisesexpositoalonso.wordpress.com     ##############################
+########################################################################################################
+#####################################     Max Planck Institute     #####################################
+##########################################     Weigel Lab     ##########################################
+
  
+This script is free to use, modify and share, but it comes with no warranty. Emails with bugs or questions are welcomed.
+
 
 ## State the problem
 Quantitative genetics is a well fundamented science that usually focuses on the effect of specific alleles (ACGT) in a quantitatie phenotype. 

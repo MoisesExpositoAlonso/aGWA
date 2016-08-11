@@ -1,0 +1,7 @@
+#You can stash (hide) your changes, pull and then apply your changes again:
+
+git stash
+git pull
+git stash pop # or apply if you want to keep the changes in the stash
+
+# Note that if there are any conflicts, git stash pop will fail and you will have to resolve them.
