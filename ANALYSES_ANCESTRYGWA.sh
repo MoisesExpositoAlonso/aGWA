@@ -50,14 +50,30 @@
 # Rscript empirical_distribution_bypermutation.R label_input_genomes.tsv 4 &
 # Rscript empirical_distribution_bypermutation.R label_input_genomes.tsv 5 
 
+# echo'Generate empirical distribution'
+# for c in 1 2 3 4 5
+# do 
+# namelog= "permut_"$c".txt"
+# echo $namelog
+# Rscript empirical_distribution_bypermutation.R label_input_genomes.tsv $c & > $namelog &
+# done
+# wait
+
+
 echo'Generate empirical distribution'
 for c in 1 2 3 4 5
-do 
-namelog= "permut_"$c".txt"
-echo $namelog
-Rscript empirical_distribution_bypermutation.R label_input_genomes.tsv $c & > $namelog &
-done
+	do 
+	for r in 1 2 3 4 5 6 7 8 9 10
+		do
+		namelog= "permut_"$c"_rep_"$r".txt"
+		echo $namelog
+		Rscript empirical_master.R label_input_genomes.tsv $c & > $namelog &
+		done
+	done
 wait
+
+Rscript empirical_join.R
+
 
 # Rscript relativizepval.R 1 &
 # Rscript relativizepval.R 2 &
@@ -82,7 +98,7 @@ Rscript combine_pvalue_position.R  > combinepvalues.log ######## NEED TO ADAPT F
 
 # run the gwa plot and top SNP
 
-# Rstudio aGWA_manhattan.R
+# Rstudio aGWA_manhattan.R [nameanalysis]
 
 # top SNPs
 

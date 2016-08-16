@@ -5,7 +5,8 @@ chr<-args[1]; chr=2
 #agwafile<-args[1] ; agwafile<-'agwa_chr2.RObject'
 agwafile<-paste('agwa_chr',chr,'.RObject')
 #permfile<-args[2] ; permfile<-'agwa_permuted_chr2.RObject'
-permfile<-paste( 'agwa_permuted_chr',chr,'.RObject')
+# permfile<-paste( 'agwa_permuted_chr',chr,'.RObject')
+permfile<-paste( 'agwa_permuted_all.RObject')
 
 
 load(agwafile)
