@@ -74,10 +74,20 @@ readlabelinput<-function(labelinputfile){
 
 readsampleout<-function(samplefile){
 cat("\nreading the parsed .sample.out file...\n")
-sampleout<-read.table(samplefile , header=F,fill=T)
 
-cat("this is an example of how it looks a painted chromosome \n")
-print(sampleout[1:10,1:10])
+if( paste(sep="",samplefile ,".RObject") %in% paste(sep="/","chromopainterparsedout",list.files(path="chromopainterparsedout")) ) {
+cat("\n found the corresponding sample.out.RObject file...\n")
+
+load(paste(sep="",samplefile ,".RObject"))
+
+}else{
+cat("\n as matrix ... \n")
+
+sampleout<-read.table(samplefile , header=F,fill=T)
+save(sampleout,file=paste(sep="",samplefile ,".RObject"))
+}
+#cat("this is an example of how it looks a painted chromosome \n")
+#print(sampleout[1:10,1:10])
 return(sampleout)
 cat("\n...done\n")
 }

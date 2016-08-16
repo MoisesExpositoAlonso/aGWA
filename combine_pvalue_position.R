@@ -32,7 +32,7 @@ aGWAfiles_parse<-sub(pattern = ".RObject", replacement = "",x = aGWAfiles_parse 
 aGWAfiles_parse_emp<-aGWAfiles_parse[grep('empirical',aGWAfiles_parse)]
 aGWAfiles_parse_emp<-sub(pattern = "_empiricalpval.RObject", replacement = "",x = aGWAfiles_parse_emp )
 aGWAfiles_parse_emp_files<-aGWAfiles[grep('empirical',aGWAfiles_parse)]
-  
+
 aGWAfiles_parse_raw<-aGWAfiles_parse[-grep('empirical',aGWAfiles_parse)]
 aGWAfiles_parse_raw_files<-aGWAfiles[-grep('empirical',aGWAfiles_parse)]
 

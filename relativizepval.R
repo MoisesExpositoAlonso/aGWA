@@ -3,7 +3,7 @@ source('ancestrygwa_functions.R')
 args<-commandArgs(TRUE)
 chr<-args[1]; chr=2
 #agwafile<-args[1] ; agwafile<-'agwa_chr2.RObject'
-agwafile<-paste('agwa_chr',chr,'.RObject')
+agwafile<-paste('agwa_chr',chr,'.RObject',sep="")
 #permfile<-args[2] ; permfile<-'agwa_permuted_chr2.RObject'
 # permfile<-paste( 'agwa_permuted_chr',chr,'.RObject')
 permfile<-paste( 'agwa_permuted_all.RObject')
@@ -18,7 +18,7 @@ dev.off()
 
 
 load(permfile)
-permgwa=gwares
+permgwa=gwares_permuted
 pdf(paste(permfile,".hist.pdf",sep=''))
 hist(as.numeric(as.matrix(permgwa)))
 qqGWA(permgwa)
