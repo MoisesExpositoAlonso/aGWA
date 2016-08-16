@@ -1,25 +1,30 @@
 
 cat("\n-------------------------------------------------------\n")
-cat(paste("\nusage:","Rscript empirical_master.R [labelinputfile] [chromosome]  [sizesample=100] [sampleoutfile] [discrete/continuous] [meanlengthblocks/fileblocklengths] [path_samleout_parsed] [nameanalysis/replicate] \n"))
+cat(paste("\nusage:","Rscript empirical_master.R [labelinputfile] [chromosome] [replicatename] \n"))
 
 cat("\n-------------------------------------------------------\n")
 
 source("ancestrygwa_functions.R")
 
+
+#------------------------------------------------------------------------------------------------------------------------
+## ARGUMENTS
+
 args<-commandArgs(TRUE)
 
 labelinputfile<-args[1] ; labelinputfile<-"label_input_genomes.tsv"
 chr<-args[2] ; #chr<-2
+nameanalysis<-args[3]
+#nameanalysis<-""
+
 # samplefile<-args[3]; #samplefile<-"chromopainterparsedout/chr2-fs.samples.out_parsedGM"
-sizesample<-args[6]
+#sizesample<-args[6]
 sizesample<-100
 
 samplefile<-paste('chromopainterparsedout/chr',chr,'-fs.samples.out_parsedGM',sep='')
-typeofanalysis<-args[4]
+#typeofanalysis<-args[4]
 typeofanalysis<-"discrete"
 
-nameanalysis<-args[5]
-nameanalysis<-""
 
 #blocksizes<-args[4];blocksizes<-"chromopainterparsedout/chr2-fs.samples.out_parsedGM_BLOCKSIZES"
 blocksizes<-paste(samplefile,"_BLOCKSIZES",sep="")

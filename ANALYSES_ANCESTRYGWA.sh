@@ -26,7 +26,7 @@
 
 # for c in 1 2 3 4 5
 # do 
-# namelog="agwa_"$c".log"
+# namelog="logs/agwa_"$c".log"
 # echo $namelog
 # Rscript ancestrygwa.R label_input_genomes.tsv $c & > $namelog &
 # done
@@ -53,7 +53,7 @@
 # echo'Generate empirical distribution'
 # for c in 1 2 3 4 5
 # do 
-# namelog= "permut_"$c".txt"
+# namelog= "logs/permut_"$c".txt"
 # echo $namelog
 # Rscript empirical_distribution_bypermutation.R label_input_genomes.tsv $c & > $namelog &
 # done
@@ -62,17 +62,18 @@
 
 echo'Generate empirical distribution'
 for c in 1 2 3 4 5
-	do 
+do 
 	for r in 1 2 3 4 5 6 7 8 9 10
 		do
-		namelog= "permut_"$c"_rep_"$r".txt"
+		namelog="logs/permut_"$c"_rep_"$r".txt"
 		echo $namelog
-		Rscript empirical_master.R label_input_genomes.tsv $c & > $namelog &
+		Rscript permutation_master.R label_input_genomes.tsv $c $r & > $namelog & 
 		done
+    wait
 	done
 wait
 
-Rscript empirical_join.R
+Rscript permutation_join.R
 
 
 # Rscript relativizepval.R 1 &
@@ -84,7 +85,7 @@ Rscript empirical_join.R
 echo'relativize pvalues'
 for c in 1 2 3 4 5
 do 
-namelog= "relpval_"$c".txt"
+namelog="logs/relpval_"$c".txt"
 echo $namelog
 Rscript relativizepval.R $c & > $namelog &
 done
@@ -93,8 +94,6 @@ wait
 ## Combine output with a chromosome and position map
 
 Rscript combine_pvalue_position.R  > combinepvalues.log ######## NEED TO ADAPT FROM RELATIVIZED P VALUE ALSO!
-
-
 
 # run the gwa plot and top SNP
 
