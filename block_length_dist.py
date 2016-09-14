@@ -3,16 +3,18 @@ import random
 
 # get the input file, the painted chromosome from an argument
 try:
- file=sys.argv[1]
+ chrom=sys.argv[1]
+ filename=chrom+"_parsedGM"
+ filename="chromopainterparsedout/"+filename
 except IndexError:
- file="chromopainterparsedout/chr2-fs.samples.out_parsedGM"
+ print "no input file provided!"
 
-print file
-painted=open(file,"r")
+print filename
+painted=open(filename,"r")
 
 
 # create a blocksizes file, where the different lengths are stored
-newfile=file+"_BLOCKSIZES"
+newfile=filename+"_BLOCKSIZES"
 blocksizes=open(newfile,"w")
 
 # several counters for the chain
