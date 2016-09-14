@@ -1,14 +1,21 @@
-
-# example run; python parse_positions_fromhaplotypes.py 1135-imp-1.haplotypes-drought   
-
-
 import sys
 
-# hapfile=open('toyhap.haplotypes','r')
-hapfile=sys.argv[1]
+# receive input file
+try:
+ hapfile=sys.argv[1]
+except IndexError:
+ print "no input file"
+ print "run as: python parse_positions_fromhaplotypes.py 1135-imp-1.haplotypes-drought 1" 
+ exit()
 hap=open(hapfile,'r')
-#print hap
-hapout =open(''.join([hapfile,"_chrpositions"]),'w')
+
+# receive chrom number
+try:
+ chrom=sys.argv[2]
+except IndexError:
+ print "no input chromosome name"
+
+hapout =open(''.join([chrom,"_chrpositions"]),'w')
 
 counter=0
 for line in hap:

@@ -1,47 +1,52 @@
 
-cat("\n-------------------------------------------------------\n")
-cat(paste("\nusage:","Rscript empirical_master.R [labelinputfile] [chromosome] [replicatename] \n"))
 
 cat("\n-------------------------------------------------------\n")
 
-source("ancestrygwa_functions.R")
+cat(paste("\nusage:","Rscript permuation_master.R [labelinputfile] [chromosome] [replicatename] [discrete/continuous] \n"))
+
+cat("\n-------------------------------------------------------\n")
+
 
 
 #------------------------------------------------------------------------------------------------------------------------
-## ARGUMENTS
+
+source("../ancestrygwa_functions.R")
+
+
+#------------------------------------------------------------------------------------------------------------------------
+## Read iput
 
 args<-commandArgs(TRUE)
 
-labelinputfile<-args[1] ; labelinputfile<-"label_input_genomes.tsv"
-chr<-args[2] ; #chr<-2
-nameanalysis<-args[3]
-#nameanalysis<-""
+labelinputfile<-args[1] 
+#abelinputfile<-"label_input_genomes.tsv"
 
-# samplefile<-args[3]; #samplefile<-"chromopainterparsedout/chr2-fs.samples.out_parsedGM"
-#sizesample<-args[6]
+chr<-args[2] 
+#chr<-2
+
+replicate<-args[3]
+
 sizesample<-100
 
-samplefile<-paste('chromopainterparsedout/chr',chr,'-fs.samples.out_parsedGM',sep='')
-#typeofanalysis<-args[4]
-typeofanalysis<-"discrete"
+samplefile<-paste0('chromopainterparsedout/',chr,'_parsedGM')
 
+typeofanalysis<-args[4] 
+#typeofanalysis<-"discrete"
 
-#blocksizes<-args[4];blocksizes<-"chromopainterparsedout/chr2-fs.samples.out_parsedGM_BLOCKSIZES"
 blocksizes<-paste(samplefile,"_BLOCKSIZES",sep="")
 
-
+cat(paste0("\narguments interpreted: labelinput file: ",labelinputfile,"; chr: ",chr,"; replicate :",replicate,"\n" ))
 #------------------------------------------------------------------------------------------------------------------------
 
 # read block length distribution
-if(is.character(blocksizes)){
+#if(is.character(blocksizes)){
 blocklen<-as.numeric(as.matrix(read.table(blocksizes,header=F)))
-}
+#}
 
 # read painted chromosomes
-if(!('sampleout' %in% ls() )  )
-{
+#if(!('sampleout' %in% ls() ) ) {
 sampleout<-readsampleout(samplefile)
-}
+#}
 
 # read phenotypes
 
@@ -66,7 +71,7 @@ cat(paste(' ...end aGWA with permutation. \n'))
 timeend(timestart)
 
 
-nameobj<-paste(sep="",nameanalysis,"agwa_permuted_chr",chr,".RObject")
+nameobj<-paste(sep="","results/rep",replicate,"_agwa_permuted_chr",chr,".RObject")
 print(paste("aGWA results stored in: ", nameobj))
 save(file=nameobj,gwares_permuted)
 

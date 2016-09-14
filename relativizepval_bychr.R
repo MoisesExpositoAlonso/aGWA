@@ -18,10 +18,11 @@ chr<-args[1]
 # chr=2
 
 #agwafile<-args[1] ; agwafile<-'agwa_chr2.RObject'
-agwafile<-paste("results/agwa_chr",chr,'.RObject',sep="")
+agwafile<-paste0("results/agwa_chr",chr,'.RObject')
 
 
-permfile<-paste( 'results/agwa_permuted_all.RObject')
+# permfile<-paste( 'results/agwa_permuted_all.RObject')
+permfile<-paste0( "results/agwa_permuted_chr",chr,".RObject")
 
 #------------------------------------------------------------------------------------------------------------------------
 
@@ -64,7 +65,7 @@ save(empiricalpval,file=paste("results/",empiricalfile,".RObject",sep='') )
 
 pdf(file=paste('plots/',empiricalfile,".hist.pdf",sep=''))
 hist(as.numeric(as.matrix(empiricalpval)),col = 'black',breaks=50)
-plot(-log10(as.numeric(as.matrix(empiricalpval)),pch=16))
+plot(-log10(as.numeric(as.matrix(empiricalpval))),pch=16)
 qqGWA(empiricalpval)
 dev.off()
 
