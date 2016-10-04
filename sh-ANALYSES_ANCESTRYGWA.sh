@@ -48,7 +48,7 @@ mkdir chromopainterparsedout
 mkdir results
 mkdir tables
 
-# chromosome list (if you have many genomes, maybe you want to generate an array object within the bash script)
+# chromosome list (if you have many chromosomes, maybe you want to generate an array object within the bash script, like this. I don't use this object though)
 chrlist=(1 2 3 4 5)
 chr=${chrlist[@]}
 
