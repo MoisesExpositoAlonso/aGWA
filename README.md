@@ -1,110 +1,141 @@
-#########################################     Ancestry GWA     #########################################
-########################################################################################################
-####################################     Moises Exposito-Alonso     ####################################
-#################################     moisesexpositoalonso@gmail.com     ###############################
-##############################     moisesexpositoalonso.wordpress.com     ##############################
-########################################################################################################
-#####################################     Max Planck Institute     #####################################
-##########################################     Weigel Lab     ##########################################
+------------------------------------------------------------
 
-[Last edit 4 Oct 2016. README under construction]
+# Ancestry Genome Wide Association (aGWA) #
+### Moises Exposito-Alonso #
+#### moisesexpositoalonso@gmail.com #
+#### moisesexpositoalonso.wordpress.com #
+#### Weigel Lab Max Planck Institute #
+
+------------------------------------------------------------
  
-These set of scripts are free to use, modify and share, but it comes with no warranty. 
-Emails with bugs or questions are welcomed: moisesexpositoalonso@gmail.com
+These set of scripts are free to use, modify and share, but it comes with no warranty. Emails with bugs or questions: moisesexpositoalonso@gmail.com
 
 If you use this methodology, please cite as:
-M Exposito-Alonso. aGWA: a genome wide association analysis incorporating ancestry information. DOI:dx.doi.... (soon will be added doi)
+M Exposito-Alonso. aGWA: genome wide association analysis with ancestry information. DOI:dx.doi__(soon will be added)
 
 
-#=======================================================================================================#
+### State the problem & state of the art
+Quantitative genetics is a well fundamented science that usually focuses on the effect of specific alleles (ACGT) in a quantitatie phenotype. Oftentimes achieving this task is challenging due to confounding structure in the data such as historical population conections and complex admixture. The solution so far has been mainly account for genome background incorporating a random variable with a kinship matrix in a mixed model framework. This has the advantage of reducing false positive SNPs, but imposes the limitation that any relevant genetic variant linked to population history processes will be removed, being these alleles of particular interest when studying the genetic basis of local adaptation. These analyses can also be of some relevance in medicine genetics when there is a difference of susceptibility to diseases due to ethnical background.
+
+Use the concept of genome wide screening of GWAs and the concept of ancestry assignation from currently widely used softwares such as Chromosome painter to assign ancestry by chunks in the genome. Instead of performing association analyses with specific allele stats (e.g. A *vs* C), do so with ancestry states defined by chromosome painter.
+
+### This repository was developed to share the analyses from Exposito-Alonso et al. 201X (*to be submitted*)
+
+The analyses were based in 762 individuals from the plant _Arabdisopsis thaliana_ belonging to the [1001 genomes project](1001g.org). For these we had (1) a continuous phenotype. (2) whole genome sequences. (3) Chromosome painter analyses from the unguided form (all to all). (4) genetic clusters assigned by ADMIXTURE or other arbitrary assignment of population (e.g. geograhpic, which actually coincides in _A.thaliana_)
 
 
-## State the problem
-Quantitative genetics is a well fundamented science that usually focuses on the effect of specific alleles (ACGT) in a quantitatie phenotype. 
-Oftentimes achieving this task is challenging due to confounding structure in the data such as historical population conections and complex
-admixture. The solution was to correct for it using a random variable with a kinship matrix in a mixed model framework. This has the advantage
-of reducing false positive SNPs, but imposes the limitation of missing adaptive changes linked to population history processes, a concept of
-high interest in evolutionary biology but of no relevance for quantative genetics in medicine or breeding. 
+### Pipeline steps and files description
+All required commands are in the file sh_ANALYSES-ANCESTRYGWA.sh. This bash script has to be edited with the location of your chromosome painter .samples.out file, and the input for chromosome painter, the haplotype files (from this we extract the locations of each SNP). 
+Then, as arguments for the sh_ANALYSES-ANCESTRYGWA.sh script, the (1st) must be a .tsv file with the information per genome (labelinput), the (2nd) the type of analysis, "discrete" (implemented so far), and (3rd) the name of this run, e.g. "run_1".
 
-## State of the art
-Use the concept of genome wide screening of GWAs and the concept of ancestry assignation from softwares such as Hapmix and Chromosome painter. 
-Instead of associating allele states with a phenotype, we rather associate ancestry states at each position in the genome. 
+The labelimput file should be a tab separated file with first column the id of the genome, second column the population, third column the continuous phenotype. It would look like this:
 
-## The analyses from Exposito-Alonso et al. 2017
+``` sh
+159	9	-0.000591739079573827
+265	9	0.000371342214314237
+350	9	NA
+351	9	NA
+```
 
-What I have of 762 individuals: (1) a phenotype, drought resistance. (2) vcf, plink, etc of genomes. (3) Chromosome painter analyses. Unguided 
-or all to all mode. (4) genetic clusters assigned by ADMIXTURE.
+#### Steps in the analyses:
+1. Parse the output from Chromosome painter. There is one .sample file per chromosome with several painted chromosomes runs per indidivual. Provided the file name, this script will produce another, more readable, file named 'parsedGM' at the end, and will be stored in the folder 'chromopainterparsedout/'. This has to be done for each chromosome. Make sure that the .samples.out file only has a number that refers to the chromosome, otherwise there will be problems downstream. This has to be edited by the user in the sh_ANALYSES-ANCESTRYGWA.sh file. 
 
-#=======================================================================================================#
+ ```sh
+ # example parsing Chromosome painter output:
+ chromo1=chr1-fs.samples.out
+ python ../parse_sampleout_file_otherfolder.py $chromo1 1 
+ ```
 
-## Pipeline steps and files description
+2. Generate the position and chromosome map from the input used in Chromosome painter (haplotype files). This will generate files as '1_chrpositions'.
 
+ ```sh
+ # example parsing haplotype files to get SNP positions:
+ haplo1='1135-imp-1.haplotypes-drought'
+ python ../parse_positions_fromhaplotypes.py $haplo1 1 
+ ```
 
-#===============
-(A) Parse the output from Chromosome painter. There is one .sample file per chromosome with several painted chromosomes runs per indidivual. Provided 
-the file name, this script will produce another, more readable, file named '_parsedGM' at the end. This has to be done for each chromosome. Make sure 
-that the .samples.out file only has a number that refers to the chromosome, otherwise there will be problems downstream.
+3. Join the SNP positions and get ready for later analyses. This will generate R objects as 'chr_1.RObject' and later 'chrpos.RObject' for all chromosomes.
 
-E.g.run
-python parse_sampleout_file_otherfolder.py /ebio/abt6_projects8/ath_1001G_history/finestructure/guideddrought/chr1.samples.out
+ ```sh
+ # Example loading SNP positions in chromosome 1
+ Rscript../parse_chr_separated.R 1 
+ # After each chromosome is read, then join those in a single object
+ Rscript ../parsejoin_chr_positions.R 1 2 3 4 5
+ ```
 
+4. Run a chromopainted gwa. It requires (1) the labels file, (2) the chromosome number (knowing the number will look for the parsed genome from above), and (3) what type of analysis (currently discrete). The test is based in a Generalized Linear Model (GLM), therefore the script is easily generalizable to phenotypes with distributions other than normal. This analyses will generate a set of p-values along the genome, but for each position also will calculate an R2, measuring how much phenotype variance the ancestry of the SNP explains. It will be stored in the folder "results/" under the name "agwa_chr1.RObject" for p-values and "agwa_r2_chr1.RObject" for R2 values. 
 
-#===============
-(B) Run a chromopainted gwa. Since I know where my results are, I just give as an argument the chromosome number. I need to provide a label of the input, 
-which are the genomes.
-This is the label input, is inside the R file, but I modify in great deal to do several analyses.
-/abt6_projects9/ath_1001G_image_pheno/experiment_218_droughtgwa/fineancestry/label-input-relicts.csv
-Also need to provide a phenotype. In this case I have my drought phenotype (and others) in the file
-../MASTER_DATA.RData
-E.g. run
-Rscript finestructure_descriptivegwa_pipe.R 1
-Rscript ancestrygwa.R
+ ```sh
+ labelinput=label_input_genomes.tsv
+ typeagwa="discrete
+ # Example aGWA in chromosome 1
+ Rscript ../ancestrygwa.R $labelinput 1 $typeagwa 
+ # After each chromosome is read, then join those in a single object
+ Rscript ../parsejoin_chr_positions.R 1 2 3 4 5
+ ```
 
-Inside this file, there is a key function, fineANOVA, which after using apply in sampleout, will merge the line of ancestry and the phenotype file and 
-compute a p-value of the differences of phenotypes across ancestry haplotypes using a kruskal wallis test. If the phenotype is normally distributed 
-also ANOVA could be done, but I implemented a non-parametric test in case the variance of the phenotype per groups is also difficult (non-homocedastic).
+5. To reduce the false positives inherent to multiple testing and population structure, I designed an empirical p-value distribution that will be used to correct the p-values from section 4. This permutation procedure consists in shuffling SNPs within individual at a distance enough to get out of a painted chromosome. The permutation of a focal position with another position within an individual will allow to maintain the overall ancestry of the individual while disrupting a specific block that might have been inherited in multiple individuals, which might be the source of phenotypic variance and what is aimed to identify. Therefore the p-values calculated only would reflect the effect of background ancestry and capture the stockasticity of p-values when performing many tests.
 
-The output p-value list is saved as an object file named finegwa_chrX.RObject
-
-This needs an extra label input file to associate the chromopainter output with phenotypes and population structure. The first column should be the
-genome identifiers, the second the population group (discrete variable) or principal component as one possible descriptor of the structure (continuous
-variable).
-
+ ⋅⋅1. Characterizing the chunks size of chromosome painter. To be able to perform a sucessful shuffling of SNPs we need to determine the distribution of painted chunks in the genome. To capture an average for all the genomes and different regions of the chromosome, a walking program runs 1 million steps per genome, counting how many steps it takes to change ancestry.  Every time it changes ancestry, i.e. a new block, it jumps randomly somewhere else in the genome to be able to cover all the genomic heterogeneity. This saves a file under "chromopainterparsedout/" folder named as the parsed genome matrix with the ending "BLOCKSIZES", and plots the block length distribution per genome inside "plots/" named as "chr1_block_length_distribution.pdf". The block length distribution of all chromosomes joined is used in the 5.2 section as the density probability distribution of the distance at which a SNP is shuffled.
+   
+   ```sh
+   # Example for chromosome 1:
+   python ../block_length_dist.py 1
+   # To visualize the block lengths there is a plotting script. It stores the plots at "plots/" subfolder.
+   Rscript ../plot_block_length_dist.R 1   
+  ```
  
-#===============
-(C) Generate a genome map. From the haplotypes input of chromosomepainter, the python file extracts the row of positions, and the R file puts all the 
-chromosome positions and generates an R object called chrpos.RObject.
+ ⋅⋅2. aGWA under permuted datasets. Each chromosome has 50 replicates by default. Each replicate consists in 100 shuffled SNPs. This will produce many objects under "results/" named by the chromosome number and the replicate number, for example: "rep1_agwa_permuted_chr1.RObject". Afterwards, all p-values are joined in the object "results/agwa_permuted_all.RObject". Once joined, a distribution of all empirical p-values is plotted as "plots/agwa_permuted_all.RObject.hist.pdf".
+   
+   ```sh
+   # The script already has a loop to paralelize many anayses replicates (50 by default). 
+   # Example for chromosome 1 and replicate 1. 
+   Rscript ../permutation_master.R $labelinput 1 1 $typeagwa 
+   # Then all p-values from the permutation procedures are joined. 
+   Rscript ../permutation_join.R
+   ```
+   
+6. Relativize aGWA p-values. Each p-value in section 4 is relativized as the percentile in the distribution produced in 5.2. That is, if the p value is 0.005 and in the distribution, which has a total of 25000 empirical p-values,there are 1000 below 0.005, the corrected p-value is 0.04. All aGWA p-values with no empirical p-values below, are assigned a corrected p-value of 1/25000 = 0.00004. Relativized agwa p-values are stored as "results/agwa_chr1.RObject_empiricalpval.RObject". A corresponding plot is generated for the uncorrected and the corrected p-values per chromosome in files under "plots" ending in ".hist.pdf"
+  
+  ```sh
+   # Example for chromosome 1. 
+   Rscript ../relativizepval.R 1  
+   ```
 
-E.g. run
-python parsie_positions_fromhaplotypes.py 1
-parse_positions_chr.R
+7. To plot the results, we need to join the computed p-values with the corresponding chromosome positions. 
+  
+  ```sh
+   # Run the next. This script already parses the "result/" folder to get all agwa and agwa empiricalpval objects.
+   Rscript ../combine_pvalue_positions.R
+   ```
+   
+8. Plot. A classic manhattan is plotted. There are two versions, one is a multiple plot with one chromosome one row (flag "perchromosome"). The other version is all chromosomes concatenated (flag "cumulative"). I prefer "perchromosome"
+  
+  ```sh
+   # Run the next. By default it plots the empirical p-value object, since they regular agwa has a really high false discovery rate.  
+   Rscript ../manhattan.R perchromosome
+   ```
+  * This produces two plots, one with all the SNPs that can be many Mb size, "plots/aGWAmanhattan.pdf", and a subsample of 10000 points, "plots/subsampleplotaGWAmanhattan.pdf". 
 
-This needs the chromosomepainter input to be able to get the original map positions of SNPs.
+9. Get top SNPs. A single script will retrieve all SNPs with p-values below a threshold (from 0 to 1), or a given number of top SNPs. A table is produced "tables/toptable_0.001.tsv", with the resulting SNPs. 
 
+  ```sh
+   # Run the next for all the SNPs with p-value<0.001 
+   Rscript ../topsnps.R 0.001 
+   # Run the next for the top 100 SNPs 
+   Rscript ../topsnps.R 100 
+   ```
 
-#===============
-(D) Posthot analyses
-(D.1) Plot a classic Manhattan plot. Given a fingewa_chrX.RObject this file will load the finegwas results of the 5 genomes and the genome map positions and 
-produe a manhattan plot.
+### NOTES
 
-E.g. run
-finestructure_gwa_plot_ALL.R
+Every R scripts sources a library, ancestrygwa_functions.R, that contains all the functions. 
 
-(D.2) Get the top SNPs. This file will produce a top list of your SNPs. A given number of top hits per chromosome and write a table finegwa_TOP_xname.csv
+Debugging should be fairly easy since steps are very well defined and each runned command is piped to store the standard output and standar error to a log file, all stored under the folder "logs/".
 
-E.g. run
-finestr *** to be added
-
-(D.3) Painted chromosome and the p-value from analyses in one plot. The scripts goes over the top SNP table and plots a given number of SNPs up and 
-downstream from the SNP hit.
-
-E.g. run
-painted_chromosome_hits.R
-
-
-#===============
-(E) Other miscelaneous analyses. 
-
+## WISHLIST OF FUTURE IMPLEMENTATIONS
+* ADD EXAMPLE TOY DATA!!!
+* Extend the wrapper scripts to the previous chromosome painter analyses. So far the user has to do it by his/her own.
+* Re-structure the scripts in a workflow management system such as snakemake
 
 
 
