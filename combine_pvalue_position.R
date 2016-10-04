@@ -29,13 +29,13 @@ cat("run ")
 ## aGWA results
 
 # Parse files
-system('find results -name "agwa_chr*.RObject" > agwaobjects.txt')
+system('find results/ -name "agwa_chr*.RObject" > agwaobjects.txt')
 aGWAfiles<-as.character.factor(read.table('agwaobjects.txt')[,1] )
 
 indexes<-parseaGWAfiles(aGWAfiles)
 
 agwaindex<-indexes[[1]]
-empresagwaindex<-indexes[[1]]
+empresagwaindex<-indexes[[2]]
 
 source("../ancestrygwa_functions.R")
 
@@ -47,10 +47,10 @@ save(x=resaGWA,file=paste0("results/resaGWA.RObject") )
 empresaGWA<-merge_agwa_chrpos(index=empresagwaindex,chrpos)
 save(x=empresaGWA,file= paste0("results/empresaGWA.RObject")  )
 
-559076
-314783
-396501
-334957
-475557
+# 559076
+# 314783
+# 396501
+# 334957
+# 475557
 
 print("finished R script for combining pvalues")

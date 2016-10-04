@@ -1,6 +1,0 @@
-./agwa_chr5.RObject
-./agwa_chr2.RObject_empiricalpval.RObject
-./agwa_chr3.RObject
-./agwa_chr2.RObject
-./agwa_chr4.RObject
-./agwa_chr1.RObject

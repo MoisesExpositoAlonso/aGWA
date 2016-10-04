@@ -1,8 +1,0 @@
-./7agwa_permuted_chr1.RObject
-./10agwa_permuted_chr1.RObject
-./1agwa_permuted_chr1.RObject
-./4agwa_permuted_chr1.RObject
-./6agwa_permuted_chr1.RObject
-./5agwa_permuted_chr1.RObject
-./8agwa_permuted_chr1.RObject
-./3agwa_permuted_chr1.RObject

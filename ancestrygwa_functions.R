@@ -20,7 +20,14 @@ mychr<-as.numeric(index[i,1])
 print (index[i,])
 
     load(myfile)
-    tmp<-data.frame(pval=gwares)
+    if(grepl("empiricalpval", myfile)){
+      print("Reading empirical pvalues...")
+      tmp<-data.frame(pval=empiricalpval)
+      }else{
+      print("Reading normal pvalues...")
+      tmp<-data.frame(pval=gwares)
+    }
+    
     tmp$chr<-mychr
 
 print(paste("length of chrpos:",length(chrpos[[mychr ]] )))
@@ -411,7 +418,7 @@ return(PvalNP)
 
 # ----------------------------------------------
 
-agwa_test<-function(xmat,typeofanalysis){
+agwa_test<-function(xmat,typeofanalysis,returnrsquare=NULL){
 
 xmat_translate=labelinput[xmat,2] # important this is translating the painted position with the structure information
 paintedSNP=xmat_translate
@@ -424,23 +431,41 @@ if(length(levels(factor(datanew[,4])) ) ==1){
 PvalNP=0
 }
 else{
-# ktest<-kruskal.test(datanew[,3] ~ factor(datanew[,4]) )
-test=
+# ktest<-kruskal.test(datanew[,3] ~ factor(datanew[,4]) ) # old implementation of non parametric tests
+test = lm(datanew[,3] ~ factor(datanew[,4]) )
+
+mypval<-as.matrix(anova(test))[1,5]
+myrsq<-summary(test)$adj.r.squared
   
-PvalNP=test$p.value
+# PvalNP=mypval
+
 }
 }
 else if(typeofanalysis=="continuous"){
 
-spearman<-cor.test(x=datanew[,3],y= datanew[,4] ,method="spearman",alternative = "two.sided")
+# spearman<-cor.test(x=datanew[,3],y= datanew[,4] ,method="spearman",alternative = "two.sided") # old implementation of non parametric tests
 
-if(spearman$estimate >0){ PvalNP=spearman$p.value}
-else if(spearman$estimate <0){  PvalNP= + spearman$p.value} ### change the + for a - to implement directional tests. Be careful because negative p-value will be transformed to NA during log transform and will produce errors. This feature needs quite some debugging
+test = lm(datanew[,3] ~ datanew[,4] )
+
+mypval<-as.matrix(anova(test))[1,5]
+myrsq<-summary(test)$adj.r.squared
+  
+# PvalNP=mypval
+# if(spearman$estimate >0){ PvalNP=spearman$p.value}
+# else if(spearman$estimate <0){  PvalNP= - spearman$p.value} ### change the + for a - to implement directional tests. Be careful because negative p-value will be transformed to NA during log transform and will produce errors. This feature needs quite some debugging
 
 }
-return(PvalNP)
+# return(PvalNP)
 # return(Pval)
 # return(list(Pval=Pval,Fval=Fval))
+
+
+if(is.null(returnrsquare)){
+ return(mypval)
+} else{ 
+  return(list(pval=mypval,r2=myrsq)) 
+  }
+
 }
 
 # ----------------------------------------------

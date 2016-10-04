@@ -7,7 +7,7 @@ toptable<-args[1]
 #toptable='toptable_20.tsv'
 #toptable='toptable_50.tsv'
 #toptable='toptable_100.tsv'
-#toptable='toptable_0.001.tsv'
+toptable='toptable_0.001.tsv'
 
 cat("\n-------------------------------------------------------\n")
 cat(paste("\nusage:","Rscript getannotations.R [toptable] \n"))
@@ -20,9 +20,11 @@ cat("\n-------------------------------------------------------\n")
 
 ## get AT annotations
 
+# genelist<-read.table(paste0("tables/",toptable),sep='\t',header=T)
 genelist<-read.table(paste0("",toptable),sep='\t',header=T)
 genelist=data.frame(chr=genelist$chr,pos=genelist$pos)
 
+source('getannotations_functions.R')
 source('../getannotations_functions.R')
 newgenelist<-findgenename(snptable = genelist,ebioroot = '~/ebio/')
 newgenelist$genenames

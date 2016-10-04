@@ -55,6 +55,7 @@ timestart<-timestart()
 
 # empiricalpval<-sapply(agwa[1:10],FUN=function(x){pvalue_given_distribution(x,permgwa) }) # profiling
 empiricalpval<-sapply(agwa,FUN=function(x){pvalue_given_distribution(x,permgwa) })
+# empiricalpval<-sapply(agwa[1:100],FUN=function(x){pvalue_given_distribution(x,permgwa) })
 empiricalpval[empiricalpval==0]<- min(empiricalpval[empiricalpval!=0]) # because there can be p values 0 (can mean two things, that the all individuals have an allele state coming from the same population, or that the p value is so low that cannot be achieved by permutation.). In any case I arbitrarily asign those the minimum next pvalue to avoid infinite numbers when transforming
 
 cat(paste(' ...end empirical pval distribution correction. \n'))

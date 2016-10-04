@@ -17,7 +17,7 @@ args<-commandArgs(TRUE)
 
 
 labelinputfile<-args[1] 
-# labelinputfile<-"label_input_genomes.tsv"
+# labelinputfile<-"../label_input_genomes.tsv"
 
 chr<-args[2] 
 # chr<-2
@@ -26,7 +26,7 @@ chr<-args[2]
 samplefile<-paste0('chromopainterparsedout/',chr,'_parsedGM')
 
 typeofanalysis<-args[3] 
-#typeofanalysis<-"discrete"
+# typeofanalysis<-"discrete"
 
 #------------------------------------------------------------------------------------------------------------------------
 
@@ -52,7 +52,11 @@ print(paste("length of labelinput:",length(labelinput[,1]) ) )
 print('start aGWA ... ')
 timestart<-timestart()
 
-gwares<-apply(sampleout[,-1],MARGIN = 2,FUN = function(x){agwa_test(xmat=x,typeofanalysis)})
+# gwares<-apply(sampleout[,-1],MARGIN = 2,FUN = function(x){agwa_test(xmat=x,typeofanalysis)})
+
+bothres<-apply(sampleout[,-1],MARGIN = 2,FUN = function(x){agwa_test(xmat=x,typeofanalysis,returnrsquare="yes")})
+gwares= unlist(bothres)[seq.int(1,length(unlist(bothres)),by=2)]
+r2= unlist(bothres)[seq.int(2,length(unlist(bothres)),by=2)]
 
 cat(paste(' ...end gwa finestructure \n'))
 timeend(timestart)
@@ -62,3 +66,6 @@ nameobj<-paste(sep="","results/agwa_chr",chr,".RObject")
 print(paste("aGWA results stored in: ", nameobj))
 save(file=nameobj,gwares)
 
+nameobj<-paste(sep="","results/agwa_r2_chr",chr,".RObject")
+print(paste("aGWA results of r2, variance explained, stored in: ", nameobj))
+save(file=nameobj,r2)

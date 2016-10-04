@@ -32,7 +32,7 @@ typeagwa=$2
 ## Iterations of empirical p value computation. The following number of iterations are done per chromosome. Each iteration is
 # comprised by 100 tests of 100 shuffled SNP positions. Careful with high number of interations since they are done in parallel
 # and will start many processes in the system simultaneously.
-iterations=100
+iterations=50
 
 # output folder name
 #out='trialcontinuous'
@@ -78,7 +78,13 @@ echo "done parse positions"
 wait
 
 echo 'joining positions SNPs...'
-Rscript ../parse_positions_chr.R 1 2 3 4 5
+for c in 1 2 3 4 5
+do 
+Rscript ../parse_chr_separated.R $c &
+done
+wait
+#Rscript ../parse_positions_chr.R 1 2 3 4 5
+Rscript ../parsejoin_chr_positions.R 1 2 3 4 5
 wait
 echo 'finished joined SNP map'
 
@@ -120,14 +126,12 @@ do
 	done
 wait
 
-#echo '...joining empirical distributions...'
-#Rscript ../permutation_join.R
-#echo ' ... finished empirical distribution calculation'
-
-
-echo '...joining empirical distributions by chromosome...'
-Rscript ../permutation_join_bychr.R 1 2 3 4 5
+echo '...joining empirical distributions...'
+Rscript ../permutation_join.R  ### uncomment for genome wide empirical pvalue correction
 echo ' ... finished empirical distribution calculation'
+# echo '...joining empirical distributions by chromosome...'
+# Rscript ../permutation_join_bychr.R 1 2 3 4 5
+# echo ' ... finished empirical distribution calculation'
 
 
 # relativize p values!
@@ -136,11 +140,12 @@ for c in 1 2 3 4 5
 do 
 namelog="logs/relpval_"$c".txt"
 echo $namelog
-#Rscript ../relativizepval.R $c &> $namelog &
-Rscript ../relativizepval_bychr.R $c &> $namelog &
+Rscript ../relativizepval.R $c &> $namelog &   ### uncomment for genome wide empirical pvalue correction
+# Rscript ../relativizepval_bychr.R $c &> $namelog &
 done
 wait
 echo '... finished relativize pvalues'
+
 
 ## Combine output with a chromosome and position map
 echo 'combine p values and positions...'

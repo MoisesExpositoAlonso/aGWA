@@ -1,13 +1,14 @@
 
 cat("\n-------------------------------------------------------\n")
 cat(paste("\nusage:","Rscript manhattan.R [typeplot] \n"))
+cat(" ... by default empirical is plotted \n")
 cat("\n-------------------------------------------------------\n")
 
 #------------------------------------------------------------------------------------------------------------------------
 args<-commandArgs(TRUE)
 
 typeplot=args[1]
-
+# typeplot<-"perchromosome"
 #------------------------------------------------------------------------------------------------------------------------
 
 load("results/resaGWA.RObject")
@@ -24,7 +25,7 @@ colorful<-c('firebrick3','lightskyblue','palegreen3','orchid4',"tan2")
 onlyblack<-c('black','black','black','black',"black")
 
 source('../ancestrygwa_functions.R')
- pdf("plots/relative_pvalue.pdf",width = 5,height = 5,useDingbats = F)
+pdf("plots/relative_pvalue.pdf",width = 5,height = 5,useDingbats = F)
 qqGWA(empresaGWA$pval)
 dev.off()
 manhattan(data=empresaGWA,empirical=T,type=typeplot)
@@ -39,3 +40,7 @@ empresaGWA_sample<-empresaGWA[sample(1:dim(empresaGWA)[1],size=100000,prob=-log1
 manhattan(data=empresaGWA_sample,empirical=T,type='perchromosome',nameplot="subsampleplot")
 
 
+pdf("plots/normal_corrected_comparison.R",width = 5,height = 5,useDingbats = F)
+plot(-log10(empresaGWA$pval),-log10(resaGWA$pval), ylab="aGWA corrected",xlab="aGWA")
+abline(a=0,b=1)
+dev.off()
