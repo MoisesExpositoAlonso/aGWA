@@ -4,7 +4,7 @@
 #$ -pe parallel 10
 #
 # Request  RAM
-#$ -l h_vmem=10G
+#$ -l h_vmem=20G
 #
 #Request not to send it to the biggest node
 #$ -l mem_total_lt=600G

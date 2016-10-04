@@ -4,7 +4,7 @@
 #$ -pe parallel 10
 #
 # Request  RAM
-#$ -l h_vmem=10G
+#$ -l h_vmem=20G
 #
 #Request not to send it to the biggest node
 #$ -l mem_total_lt=600G
@@ -21,5 +21,5 @@
 #$ -m beas
 
 
-time bash sh-ANALYSES_ANCESTRYGWA.sh label_input_genomes.tsv discrete trialdiscrete50 > discrete50.log
+time bash sh-ANALYSES_ANCESTRYGWA.sh label_input_genomes.tsv discrete run50 > run50.log
 
