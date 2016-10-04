@@ -1,10 +1,11 @@
+[ this repo is still in alpha testing ]
 ------------------------------------------------------------
 
-# Ancestry Genome Wide Association (aGWA) #
-#### Moises Exposito-Alonso #
-##### moisesexpositoalonso@gmail.com #
-##### moisesexpositoalonso.wordpress.com #
-##### Weigel Lab Max Planck Institute #
+# Ancestry Genome Wide Association (aGWA) 
+#### Moises Exposito-Alonso 
+##### moisesexpositoalonso@gmail.com 
+##### moisesexpositoalonso.wordpress.com 
+##### Weigel Lab - Max Planck Institute 
 
 ------------------------------------------------------------
  
@@ -15,7 +16,7 @@ M Exposito-Alonso. aGWA: genome wide association analysis with ancestry informat
 
 
 ### WISHLIST OF FUTURE IMPLEMENTATIONS
-* ADD EXAMPLE TOY DATA!!!
+* ADD EXAMPLE DATA!!! 
 * Extend the wrapper scripts to run autonomously chromosome painter analyses. (so far the user has to run it *a priori*)
 * Re-structure the scripts in a workflow management system such as snakemake
 
@@ -54,7 +55,7 @@ The labelimput file should be a tab separated file with first column the id of t
 
  ```sh
  # example parsing Chromosome painter output:
- chromo1=chr1-fs.samples.out
+ chromo1='chr1-fs.samples.out'
  python ../parse_sampleout_file_otherfolder.py $chromo1 1 
  ```
 
