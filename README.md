@@ -1,10 +1,10 @@
 ------------------------------------------------------------
 
 # Ancestry Genome Wide Association (aGWA) #
-### Moises Exposito-Alonso #
-#### moisesexpositoalonso@gmail.com #
-#### moisesexpositoalonso.wordpress.com #
-#### Weigel Lab Max Planck Institute #
+#### Moises Exposito-Alonso #
+##### moisesexpositoalonso@gmail.com #
+##### moisesexpositoalonso.wordpress.com #
+##### Weigel Lab Max Planck Institute #
 
 ------------------------------------------------------------
  
@@ -14,12 +14,18 @@ If you use this methodology, please cite as:
 M Exposito-Alonso. aGWA: genome wide association analysis with ancestry information. DOI:dx.doi__(soon will be added)
 
 
+### WISHLIST OF FUTURE IMPLEMENTATIONS
+* ADD EXAMPLE TOY DATA!!!
+* Extend the wrapper scripts to run autonomously chromosome painter analyses. (so far the user has to run it *a priori*)
+* Re-structure the scripts in a workflow management system such as snakemake
+
+
 ### State the problem & state of the art
 Quantitative genetics is a well fundamented science that usually focuses on the effect of specific alleles (ACGT) in a quantitatie phenotype. Oftentimes achieving this task is challenging due to confounding structure in the data such as historical population conections and complex admixture. The solution so far has been mainly account for genome background incorporating a random variable with a kinship matrix in a mixed model framework. This has the advantage of reducing false positive SNPs, but imposes the limitation that any relevant genetic variant linked to population history processes will be removed, being these alleles of particular interest when studying the genetic basis of local adaptation. These analyses can also be of some relevance in medicine genetics when there is a difference of susceptibility to diseases due to ethnical background.
 
 Use the concept of genome wide screening of GWAs and the concept of ancestry assignation from currently widely used softwares such as Chromosome painter to assign ancestry by chunks in the genome. Instead of performing association analyses with specific allele stats (e.g. A *vs* C), do so with ancestry states defined by chromosome painter.
 
-### This repository was developed to share the analyses from Exposito-Alonso et al. 201X (*to be submitted*)
+### This repository has been created to share the analyses from Exposito-Alonso et al. 201X (*to be submitted*)
 
 The analyses were based in 762 individuals from the plant _Arabdisopsis thaliana_ belonging to the [1001 genomes project](1001g.org). For these we had (1) a continuous phenotype. (2) whole genome sequences. (3) Chromosome painter analyses from the unguided form (all to all). (4) genetic clusters assigned by ADMIXTURE or other arbitrary assignment of population (e.g. geograhpic, which actually coincides in _A.thaliana_)
 
@@ -131,11 +137,6 @@ The labelimput file should be a tab separated file with first column the id of t
 Every R scripts sources a library, ancestrygwa_functions.R, that contains all the functions. 
 
 Debugging should be fairly easy since steps are very well defined and each runned command is piped to store the standard output and standar error to a log file, all stored under the folder "logs/".
-
-## WISHLIST OF FUTURE IMPLEMENTATIONS
-* ADD EXAMPLE TOY DATA!!!
-* Extend the wrapper scripts to the previous chromosome painter analyses. So far the user has to do it by his/her own.
-* Re-structure the scripts in a workflow management system such as snakemake
 
 
 
