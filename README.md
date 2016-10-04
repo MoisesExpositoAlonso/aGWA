@@ -79,7 +79,7 @@ The labelimput file should be a tab separated file with first column the id of t
 
  ```sh
  labelinput=label_input_genomes.tsv
- typeagwa="discrete
+ typeagwa="discrete"
  # Example aGWA in chromosome 1
  Rscript ../ancestrygwa.R $labelinput 1 $typeagwa 
  # After each chromosome is read, then join those in a single object
