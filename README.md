@@ -11,7 +11,7 @@
 These set of scripts are free to use, modify and share, but it comes with no warranty. Emails with bugs or questions: moisesexpositoalonso@gmail.com
 
 If you use this methodology, please cite as:
-M Exposito-Alonso. aGWA: genome wide association analysis with ancestry information. DOI:dx.doi__(soon will be added)
+M Exposito-Alonso. aGWA: genome wide association analysis with ancestry information. DOI:dx.doi  (soon will be added)
 
 
 ### WISHLIST OF FUTURE IMPLEMENTATIONS
@@ -33,6 +33,12 @@ The analyses were based in 762 individuals from the plant _Arabdisopsis thaliana
 ### Pipeline steps and files description
 All required commands are in the file sh_ANALYSES-ANCESTRYGWA.sh. This bash script has to be edited with the location of your chromosome painter .samples.out file, and the input for chromosome painter, the haplotype files (from this we extract the locations of each SNP). 
 Then, as arguments for the sh_ANALYSES-ANCESTRYGWA.sh script, the (1st) must be a .tsv file with the information per genome (labelinput), the (2nd) the type of analysis, "discrete" (implemented so far), and (3rd) the name of this run, e.g. "run_1".
+
+An example of how to run it is found in the file "example_job.sh", and would be like below. I added the "time" command to know how long it takes to run, and redirect the output to a log file named as the analysis.
+
+``` sh
+time bash sh-ANALYSES_ANCESTRYGWA.sh label_input_genomes.tsv discrete run_1 > run_1.log
+```
 
 The labelimput file should be a tab separated file with first column the id of the genome, second column the population, third column the continuous phenotype. It would look like this:
 
