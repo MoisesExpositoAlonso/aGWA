@@ -90,22 +90,22 @@ The labelimput file should be a tab separated file with first column the id of t
 
   1. Characterizing the chunks size of chromosome painter. To be able to perform a sucessful shuffling of SNPs we need to determine the distribution of painted chunks in the genome. To capture an average for all the genomes and different regions of the chromosome, a walking program runs 1 million steps per genome, counting how many steps it takes to change ancestry.  Every time it changes ancestry, i.e. a new block, it jumps randomly somewhere else in the genome to be able to cover all the genomic heterogeneity. This saves a file under "chromopainterparsedout/" folder named as the parsed genome matrix with the ending "BLOCKSIZES", and plots the block length distribution per genome inside "plots/" named as "chr1_block_length_distribution.pdf". The block length distribution of all chromosomes joined is used in the 5.2 section as the density probability distribution of the distance at which a SNP is shuffled.
    
-   ```sh
-   # Example for chromosome 1:
-   python ../block_length_dist.py 1
-   # To visualize the block lengths there is a plotting script. It stores the plots at "plots/" subfolder.
-   Rscript ../plot_block_length_dist.R 1   
-  ```
+     ```sh
+     # Example for chromosome 1:
+     python ../block_length_dist.py 1
+     # To visualize the block lengths there is a plotting script. It stores the plots at "plots/" subfolder.
+     Rscript ../plot_block_length_dist.R 1   
+    ```
  
   2. aGWA under permuted datasets. Each chromosome has 50 replicates by default. Each replicate consists in 100 shuffled SNPs. This will produce many objects under "results/" named by the chromosome number and the replicate number, for example: "rep1_agwa_permuted_chr1.RObject". Afterwards, all p-values are joined in the object "results/agwa_permuted_all.RObject". Once joined, a distribution of all empirical p-values is plotted as "plots/agwa_permuted_all.RObject.hist.pdf".
    
-   ```sh
-   # The script already has a loop to paralelize many anayses replicates (50 by default). 
-   # Example for chromosome 1 and replicate 1. 
-   Rscript ../permutation_master.R $labelinput 1 1 $typeagwa 
-   # Then all p-values from the permutation procedures are joined. 
-   Rscript ../permutation_join.R
-   ```
+     ```sh
+     # The script already has a loop to paralelize many anayses replicates (50 by default). 
+     # Example for chromosome 1 and replicate 1. 
+     Rscript ../permutation_master.R $labelinput 1 1 $typeagwa 
+     # Then all p-values from the permutation procedures are joined. 
+     Rscript ../permutation_join.R
+     ```
    
 6. Relativize aGWA p-values. Each p-value in section 4 is relativized as the percentile in the distribution produced in 5.2. That is, if the p value is 0.005 and in the distribution, which has a total of 25000 empirical p-values,there are 1000 below 0.005, the corrected p-value is 0.04. All aGWA p-values with no empirical p-values below, are assigned a corrected p-value of 1/25000 = 0.00004. Relativized agwa p-values are stored as "results/agwa_chr1.RObject_empiricalpval.RObject". A corresponding plot is generated for the uncorrected and the corrected p-values per chromosome in files under "plots" ending in ".hist.pdf"
   
