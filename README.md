@@ -11,8 +11,9 @@
  
 These set of scripts are free to use, modify and share, but it comes with no warranty. Emails with bugs or questions: moisesexpositoalonso@gmail.com
 
-If you use this methodology, please cite as:
-M Exposito-Alonso. aGWA: genome wide association analysis with ancestry information. DOI:dx.doi  (soon will be added)
+If you want to refer to this repository, please use the permanent DOI link:
+M Exposito-Alonso. aGWA: genome wide association analysis with ancestry information. [![DOI](https://zenodo.org/badge/69942888.svg)](https://zenodo.org/badge/latestdoi/69942888)
+
 
 
 ### WISHLIST OF FUTURE IMPLEMENTATIONS
